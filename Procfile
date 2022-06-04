@@ -1,0 +1,1 @@
+web: gunicorn rocketeers_bot.wsgi
