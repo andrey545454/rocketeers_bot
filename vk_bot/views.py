@@ -5,4 +5,10 @@ from django.http import HttpResponse
 
 
 async def index(request):
-    return HttpResponse("Test")
+    return HttpResponse('Test')
+
+
+async def confirm(request):
+    if request.method == 'POST':
+        print(request)
+        return '986c9da8'
