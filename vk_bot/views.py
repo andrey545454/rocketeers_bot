@@ -1,14 +1,18 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+
+# Work with vk
+from vk.vk_api import *
 
 # Create your views here.
 
 
 async def index(request):
-    return HttpResponse('Test')
-
-
-async def confirm(request):
     if request.method == 'POST':
-        print(request)
-        return HttpResponse('986c9da8')
+        match request.POST['type']:
+            case MessageType.CONFIRM:
+                confirmation()
+            case '':
+                pass
+    else:
+        return HttpResponse('Test')
+
