@@ -5,5 +5,5 @@ class MessageType:
     CONFIRMATION = 'confirmation'
 
 
-def confirmation():
+def get_confirmation_code():
     return VK_CONFIRM_CODE

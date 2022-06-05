@@ -17,7 +17,7 @@ async def index(request):
             data = json.loads(request.body)
             match data['type']:
                 case MessageType.CONFIRMATION:
-                    return HttpResponse(confirmation())
+                    return HttpResponse(get_confirmation_code())
                 case _:
                     return HttpResponseNotFound()
 
