@@ -10,7 +10,7 @@ async def index(request):
     if request.method == 'POST':
         match request.POST['type']:
             case MessageType.CONFIRM:
-                confirmation()
+                return confirmation()
             case '':
                 pass
     else:
