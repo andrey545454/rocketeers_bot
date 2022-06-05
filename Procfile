@@ -1,1 +1,1 @@
-web: gunicorn rocketeers_bot.wsgi
+web: daphne rocketeers_bot.asgi:application

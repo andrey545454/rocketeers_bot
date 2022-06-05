@@ -1,4 +1,4 @@
 Django
 django-heroku
-gunicorn
+daphne
 python-decouple
