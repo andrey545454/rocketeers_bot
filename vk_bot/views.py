@@ -11,7 +11,7 @@ from vk_bot.vk.vk_api import *
 async def index(request):
     if request.method == 'POST':
         match request.POST['type']:
-            case MessageType.CONFIRM:
+            case MessageType.CONFIRMATION:
                 return HttpResponse(confirmation())
             case _:
                 return Http404()
