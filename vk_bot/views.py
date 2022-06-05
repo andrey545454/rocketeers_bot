@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 # Work with vk
-from vk.vk_api import *
+from vk_bot.vk.vk_api import *
 
 # Create your views here.
 
