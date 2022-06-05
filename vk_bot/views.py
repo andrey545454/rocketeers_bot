@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, HttpResponseNotFound
+import json
 
 
 # Work with vk
@@ -9,12 +10,15 @@ from vk_bot.vk.vk_api import *
 
 
 async def index(request):
-    if request.method == 'POST':
-        match request.POST['type']:
-            case MessageType.CONFIRMATION:
-                return HttpResponse(confirmation())
-            case _:
-                return Http404()
-    else:
-        return HttpResponse('Test')
+    match request.method:
+        case 'GET':
+            return HttpResponse('Test')
+        case 'POST':
+            data = json.loads(request.body)
+            match data['type']:
+                case MessageType.CONFIRMATION:
+                    return HttpResponse(confirmation())
+                case _:
+                    return HttpResponseNotFound()
+
 
