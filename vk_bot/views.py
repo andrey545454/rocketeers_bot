@@ -11,4 +11,4 @@ async def index(request):
 async def confirm(request):
     if request.method == 'POST':
         print(request)
-        return '986c9da8'
+        return HttpResponse('986c9da8')
