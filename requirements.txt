@@ -1,4 +1,6 @@
+aiohttp
+daphne
 Django
 django-heroku
-daphne
 python-decouple
+

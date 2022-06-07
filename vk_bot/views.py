@@ -12,13 +12,17 @@ from vk_bot.vk.vk_api import *
 async def index(request):
     match request.method:
         case 'GET':
-            return HttpResponse('Test')
+            return HttpResponse()
         case 'POST':
             data = json.loads(request.body)
-            match data['type']:
-                case MessageType.CONFIRMATION:
-                    return HttpResponse(get_confirmation_code())
-                case _:
-                    return HttpResponseNotFound()
+            if data.get('secret') == VK_SECRET:
+                match data.get('type'):
+                    case MessageType.CONFIRMATION:
+                        return HttpResponse(get_confirmation_code())
+                    case MessageType.MESSAGE_NEW:
+                        await parse_message_obj(data['object'])
+                        return HttpResponse()
+
+    return HttpResponseNotFound()
 
 
