@@ -55,10 +55,6 @@ class ButtonType(str, Enum):
     EPIC_GAMES = 'epic'
 
 
-def get_confirmation_code() -> str:
-    return VK_CONFIRM_CODE
-
-
 async def parse_message_obj(obj: dict):
     msg = obj['message']
     msg_text = msg['text']

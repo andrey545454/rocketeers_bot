@@ -18,7 +18,7 @@ async def index(request):
             if data.get('secret') == VK_SECRET:
                 match data.get('type'):
                     case MessageType.CONFIRMATION:
-                        return HttpResponse(get_confirmation_code())
+                        return HttpResponse(VK_CONFIRM_CODE)
                     case MessageType.MESSAGE_NEW:
                         await parse_message_obj(data['object'])
                         return HttpResponse('ok')
