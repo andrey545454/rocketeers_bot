@@ -22,7 +22,7 @@ async def index(request):
                     case MessageType.MESSAGE_NEW:
                         await parse_message_obj(data['object'])
                         return HttpResponse('ok')
-                    case MessageType.MESSAGE_NEW:
+                    case MessageType.MESSAGE_REPLY:
                         return HttpResponse('ok')
     return HttpResponseNotFound()
 

@@ -17,7 +17,6 @@ VK_CONFIRM_CODE = config('VK_CONFIRM_CODE')
 VK_SECRET = config('VK_SECRET')
 
 
-
 class MessageType(str, Enum):
     """ List of messsages from API """
 
