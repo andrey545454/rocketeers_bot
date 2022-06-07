@@ -23,6 +23,7 @@ class MessageType(str, Enum):
 
     CONFIRMATION = 'confirmation'
     MESSAGE_NEW = 'message_new'
+    MESSAGE_REPLY = 'message_reply'
 
 
 class CommandType(str, Enum):

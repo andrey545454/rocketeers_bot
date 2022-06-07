@@ -21,8 +21,9 @@ async def index(request):
                         return HttpResponse(get_confirmation_code())
                     case MessageType.MESSAGE_NEW:
                         await parse_message_obj(data['object'])
-                        return HttpResponse()
-
+                        return HttpResponse('ok')
+                    case MessageType.MESSAGE_NEW:
+                        return HttpResponse('ok')
     return HttpResponseNotFound()
 
 
