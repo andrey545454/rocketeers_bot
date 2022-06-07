@@ -30,50 +30,49 @@ class CommandType(str, Enum):
     START = 'start'
 
 
-class VkKeyboardColor(Enum):
-    """ List of colors """
-
-    # Blue
-    PRIMARY = 'primary'
-
-    # White
-    SECONDARY = 'secondary'
-
-    # Red
-    NEGATIVE = 'negative'
-
-    # Green
-    POSITIVE = 'positive'
-
-
 class ButtonType(str, Enum):
     """ List of platforms """
 
+    STEAM = 'steam'
+    EPIC = 'epic'
     PLAYSTATION = 'psn'
     XBOX = 'xbl'
-    STEAM = 'steam'
-    EPIC_GAMES = 'epic'
+
+
+class Keyboards:
+    """ List of keyboards """
+
+    PLATFORM_KEYBOARD = json.dumps({
+        'one_time': False,
+        'buttons': [[
+            {'action': {
+                'type': 'text',
+                'payload': f'{{"command": "{button.value}"}}',
+                'label': button.name
+            }}
+            for button in ButtonType
+        ]]
+    })
 
 
 async def parse_message_obj(obj: dict):
     msg = obj['message']
     msg_text = msg['text']
-    user_id = msg['from_id']
-    await send_message(user_id, msg_text)
-
-
-async def send_message(to_id: int, msg: str):
-    cl_msg = clean_message(msg)
-    answer_msg = ''
-    match cl_msg:
+    from_id = msg['from_id']
+    payload = json.loads(msg['payload'])
+    print(Keyboards.PLATFORM_KEYBOARD)
+    match payload.get('command'):
         case CommandType.START:
-            answer_msg = 'Здравствуйте! Чтобы добавить себя выберите платформу'
+            await vk_send_message(
+                from_id,
+                'Здравствуйте! Чтобы добавить себя выберите платформу',
+                Keyboards.PLATFORM_KEYBOARD
+            )
+        case _:
+            await vk_send_message(from_id, 'Ошибка! Повторите процесс заного')
 
-    if answer_msg:
-        await vk_send_message(to_id, answer_msg)
 
-
-async def vk_send_message(to_id: int, msg: str):
+async def vk_send_message(to_id: int, msg: str, keyboard: dict = None, payload: str = ''):
 
     async with aiohttp.request(
         'POST',
@@ -83,7 +82,10 @@ async def vk_send_message(to_id: int, msg: str):
             'user_id': to_id,
             'random_id': get_random_id(),
             'message': msg,
+            'keyboard': keyboard,
+            'payload': payload,
             'v': VK_API_V}
     ) as resp:
 
         logger.info(f'Send message to {to_id} - response [{resp.status}]')
+        logger.info(f'{await resp.json()}')
